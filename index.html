@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>My Diary</title>
+<meta name="theme-color" content="#CFEA2B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Diary">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+
+<style>
+:root{--ink:#1E2A0E;--tom:#FF6347;--tomd:#D93F22;--chart:#CFEA2B;--mut:#5C6B3A;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Crect width='8' height='8' fill='%23fff'/%3E%3Cg fill='%23CFEA2B'%3E%3Cpath d='M0 0h4v4H0zM4 4h4v4H4z'/%3E%3Cpath d='M4 0l2 2-2 2zM0 4l2 2-2 2z'/%3E%3C/g%3E%3C/svg%3E") 0 0/36px 36px}
+#app{max-width:430px;margin:0 auto;padding:14px 14px 40px;display:flex;flex-direction:column;gap:12px}
+h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:34px;line-height:1.05}
+h2{margin:0;font-size:18px;font-family:Georgia,serif;font-style:italic}
+.card{background:#fff;border:2.5px solid var(--tom);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.title{background:#fff;border:2.5px solid var(--tom);border-radius:20px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.wk{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wk b{font-size:16px}
+button{font:inherit;color:inherit;cursor:pointer}
+.nav{width:44px;height:44px;border-radius:14px;border:2.5px solid var(--tom);background:#fff;font-size:22px}
+.tabs{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.tab{height:58px;border-radius:14px;border:2.5px solid var(--tom);background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-weight:700;font-size:15px;padding:0}
+.tab small{font-weight:600;font-size:12px}
+.tab.sel{background:var(--tom)}
+.tab i{width:8px;height:8px;border-radius:4px;background:transparent;display:block}
+.tab i.on{background:var(--ink)}
+.tab.tod small{text-decoration:underline}
+.pill{display:inline-block;background:var(--chart);border:2px solid var(--ink);border-radius:999px;padding:4px 12px;font-weight:700;font-size:15px}
+.circ{display:flex;gap:6px;align-items:center}
+.circ span{width:22px;height:22px;border-radius:11px;border:2.5px solid var(--tom);background:#fff}
+.circ span.on{background:var(--tom)}
+textarea,input[type=number],input[type=text],input[type=time]{font:inherit;font-size:16px;color:var(--ink);width:100%;border:2px solid #E7EBD2;border-radius:12px;padding:10px;background:#FBFDF3;resize:vertical}
+textarea:focus,input:focus{outline:3px solid var(--chart);border-color:var(--ink)}
+.row{display:flex;align-items:center;gap:12px;min-height:44px;font-size:16px;text-align:left;background:none;border:0;padding:2px 0;width:100%}
+.box{width:28px;height:28px;border-radius:9px;border:2.5px solid var(--tom);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;background:#fff}
+.row.on .box{background:var(--tom)}
+.row.on span:last-child{text-decoration:line-through;color:var(--mut)}
+.tg.on span:last-child{text-decoration:none!important;color:var(--ink)!important}
+.row em{margin-left:auto;font-style:normal;color:var(--mut);font-size:14px;white-space:nowrap}
+.item{display:flex;align-items:center;gap:8px;min-height:44px;font-size:16px}.item .row{flex:1;min-width:0}.tm{background:var(--chart);border:2px solid var(--ink);border-radius:10px;padding:2px 8px;font-size:15px;font-weight:700;white-space:nowrap}.del{width:44px;height:44px;border:0;background:none;font-size:26px;color:var(--mut);flex-shrink:0}.add{display:flex;gap:8px}.add input[type=time]{width:122px;flex-shrink:0}.add input[type=text]{flex:1;min-width:0}.addb{height:44px;padding:0 16px;border-radius:12px;border:2.5px solid var(--tom);background:var(--tom);font-weight:700;color:var(--ink);flex-shrink:0}
+.glasses{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+.g{height:46px;border-radius:8px 8px 14px 14px;border:2.5px solid var(--tom);background:#fff;padding:0}
+.g.on{background:#8FD3F4;border-color:var(--ink)}
+.gl{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:16px}
+.gl label{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--mut)}
+.gl input{width:76px;padding:6px 8px}
+.step{display:flex;align-items:center;gap:10px}
+.step button{width:48px;height:48px;border-radius:14px;border:2.5px solid var(--tom);background:#fff;font-size:24px;font-weight:700}
+.step b{font-size:26px;min-width:44px;text-align:center}
+.bar{height:10px;border-radius:5px;background:#E7EBD2;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--tom)}
+label.f{font-weight:700;font-size:15px;display:flex;flex-direction:column;gap:4px}
+.lnk{font-size:15px;color:var(--ink)}
+#saved{position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:999px;padding:6px 14px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none}
+#saved.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="saved">Saved</div>
+<script>
+const MOVES=[["Warm up on the bike","5 min"],["Leg press","2 x 10"],["Abductor machine","2 x 10"],["Lat pulldown","2 x 10"],["Chest press","2 x 10"],["Bicep curl","2 x 10"],["Crunches","2 x 10"]];
+const HAB=["Protein with every meal","Veg or fruit with 2+ meals"];
+const DN=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const cache={},timers={};let col=null;
+const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const mondayOf=d=>{const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x};
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const keyOf=d=>"d"+d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0");
+const fmt=(d,o)=>d.toLocaleDateString("en-IE",o);
+let mon=mondayOf(new Date()),sel=(new Date().getDay()+6)%7;
+const todayKey=keyOf(new Date());
+try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf("diary:")===0)cache[k.slice(6)]=JSON.parse(localStorage.getItem(k))}}catch(e){}
+const S=()=>Object.assign({water:8,pages:10,steps:6000},cache.settings||{});
+const D=k=>cache[k]||{};
+const star=on=>on?'<svg viewBox="0 0 24 24" width="26" height="26" role="img" aria-label="Goal reached" style="vertical-align:-5px;margin-left:8px"><path d="M12 2l2.9 6.6 7.1.7-5.3 4.8 1.5 7-6.2-3.6-6.2 3.6 1.5-7L2 9.3l7.1-.7z" fill="#FF6347" stroke="#1E2A0E" stroke-width="1.6" stroke-linejoin="round"/></svg>':"";
+function flash(t){const s=document.getElementById("saved");s.textContent=t||"Saved";s.classList.add("on");setTimeout(()=>s.classList.remove("on"),1200)}
+function save(k,v){cache[k]=v;clearTimeout(timers[k]);timers[k]=setTimeout(async()=>{delete timers[k];try{if(col)await col.doc(k).set(v);else localStorage.setItem("diary:"+k,JSON.stringify(v));flash()}catch(e){flash("Could not save")}},500)}
+function upd(k,patch){save(k,Object.assign({},D(k),patch))}
+function render(){
+const days=[...Array(7)].map((_,i)=>addD(mon,i)),d=days[sel],k=keyOf(d),x=D(k),st=S();
+const gymN=days.filter(z=>D(keyOf(z)).gym).length;
+const mv=x.m||{};const water=x.water||0,pages=x.pages||0;
+const wp=Math.min(100,Math.round(pages/(st.pages||1)*100)),sp=Math.min(100,Math.round((x.steps||0)/(st.steps||1)*100));
+document.getElementById("app").innerHTML=`
+<div class="title"><h1>My Diary</h1><span class="pill">Gym ${gymN}/3</span></div>
+<div class="wk"><button class="nav" data-a="wk" data-n="-1" aria-label="Previous week">&#8249;</button><b>Week of ${fmt(mon,{day:"numeric",month:"short"})}</b><button class="nav" data-a="wk" data-n="1" aria-label="Next week">&#8250;</button></div>
+<div class="tabs">${days.map((z,i)=>`<button class="tab${i==sel?" sel":""}${keyOf(z)==todayKey?" tod":""}" data-a="day" data-n="${i}"><small>${DN[i]}</small>${z.getDate()}<i class="${D(keyOf(z)).gym?"on":""}"></i></button>`).join("")}</div>
+<div class="card"><h2>${fmt(d,{weekday:"long",day:"numeric",month:"long"})}</h2>
+<div class="circ" aria-label="Gym days this week">${[0,1,2].map(i=>`<span class="${i<gymN?"on":""}"></span>`).join("")}<span style="border:0;width:auto;background:none;font-size:14px;color:var(--mut)">gym days this week</span></div>
+<label class="f">Today's plan<textarea rows="2" data-f="plan" placeholder="What's the plan today?">${esc(x.plan)}</textarea></label>
+<label class="f">Location today<input type="text" data-f="loc" placeholder="Where am I?" value="${esc(x.loc)}"></label>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="row tg${x.gym?" on":""}" data-a="gym"><span class="box">${x.gym?"&#10003;":""}</span><span>Gym day</span></button><button class="row tg${x.swim?" on":""}" data-a="swim"><span class="box">${x.swim?"&#10003;":""}</span><span>Swim day</span></button></div></div>
+<div class="card"><h2>Meetings today</h2>${(x.meets||[]).map((m,i)=>`<div class="item"><b class="tm">${esc(m.t||"--:--")}</b><span style="flex:1">${esc(m.n)}</span><button class="del" data-a="delm" data-n="${i}" aria-label="Remove meeting">&times;</button></div>`).join("")}<div class="add"><input type="time" id="mt" aria-label="Meeting time"><input type="text" id="mn" placeholder="Meeting" aria-label="Meeting name"><button class="addb" data-a="addm">Add</button></div></div>
+<div class="card"><h2>Work to do${star((x.todos||[]).length>0&&(x.todos||[]).every(t=>t.d))}</h2>${(x.todos||[]).map((t,i)=>`<div class="item"><button class="row${t.d?" on":""}" data-a="td" data-n="${i}"><span class="box">${t.d?"&#10003;":""}</span><span>${esc(t.n)}</span></button><button class="del" data-a="deltd" data-n="${i}" aria-label="Remove task">&times;</button></div>`).join("")}<div class="add"><input type="text" id="tn" placeholder="Add a goal or task" aria-label="New task"><button class="addb" data-a="addt">Add</button></div></div>
+${x.gym?`<div class="card"><h2>Workout moves${star(MOVES.every((_,i)=>mv[i]))}</h2>${MOVES.map((m,i)=>`<button class="row${mv[i]?" on":""}" data-a="mv" data-n="${i}"><span class="box">${mv[i]?"&#10003;":""}</span><span>${m[0]}</span><em>${m[1]}</em></button>`).join("")}</div>`:""}${x.swim?`<div class="card"><h2>Swim</h2><label class="f">Lengths<input type="number" inputmode="numeric" data-f="lengths" placeholder="How many lengths?" value="${esc(x.lengths)}"></label></div>`:""}
+<div class="card"><h2>Water${star(st.water>0&&water>=st.water)}</h2><div class="glasses">${[...Array(Math.min(24,Math.max(st.water,water+(water>=st.water?1:0))))].map((_,i)=>`<button class="g${i<water?" on":""}" data-a="water" data-n="${i+1}" aria-label="Glass ${i+1}"></button>`).join("")}</div>
+<div class="gl"><b>${water} of ${st.water} glasses</b><label>Goal<input type="number" inputmode="numeric" data-s="water" value="${esc(st.water)}"></label></div></div>
+<div class="card"><h2>Pages read${star(st.pages>0&&pages>=st.pages)}</h2><div class="step"><button data-a="pg" data-n="-1" aria-label="Fewer pages">&minus;</button><b>${pages}</b><button data-a="pg" data-n="1" aria-label="More pages">+</button><button data-a="pg" data-n="5" style="width:auto;padding:0 12px;font-size:16px">+5</button></div>
+<div class="bar"><i style="width:${wp}%"></i></div>
+<div class="gl"><span>Goal pages a day</span><label><input type="number" inputmode="numeric" data-s="pages" value="${esc(st.pages)}"></label></div></div>
+<div class="card"><h2>Steps${star(st.steps>0&&(x.steps||0)>=st.steps)}</h2><input type="number" inputmode="numeric" data-f="steps" placeholder="Steps today" value="${esc(x.steps)}"><div class="bar"><i style="width:${sp}%"></i></div>
+<div class="gl"><span>Goal steps a day</span><label><input type="number" inputmode="numeric" data-s="steps" value="${esc(st.steps)}"></label></div></div>
+<div class="card"><h2>Food goals${star(HAB.every((_,i)=>(x.h||{})[i]))}</h2>${HAB.map((h,i)=>`<button class="row${(x.h||{})[i]?" on":""}" data-a="hab" data-n="${i}"><span class="box">${(x.h||{})[i]?"&#10003;":""}</span><span>${h}</span></button>`).join("")}</div>
+<div class="card"><h2>Food log</h2>${[["b","Breakfast"],["l","Lunch"],["d","Dinner"],["s","Snacks and drinks"]].map(f=>`<label class="f">${f[1]}<textarea rows="2" data-f="${f[0]}">${esc(x[f[0]])}</textarea></label>`).join("")}</div>
+<div class="card"><h2>Notes</h2><textarea rows="3" data-f="notes" placeholder="How did today feel?">${esc(x.notes)}</textarea></div>`}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,n=+b.dataset.n,k=keyOf(addD(mon,sel)),x=D(k);
+if(a=="wk"){mon=addD(mon,7*n)}else if(a=="day"){sel=n}
+else if(a=="gym")upd(k,{gym:!x.gym});
+else if(a=="swim")upd(k,{swim:!x.swim});
+else if(a=="addm"){const t=document.getElementById("mt").value,n=document.getElementById("mn").value.trim();if(t||n)upd(k,{meets:[...(x.meets||[]),{t,n}].sort((p,q)=>(p.t||"99").localeCompare(q.t||"99"))})}
+else if(a=="delm")upd(k,{meets:(x.meets||[]).filter((_,i)=>i!=n)});
+else if(a=="addt"){const n2=document.getElementById("tn").value.trim();if(n2)upd(k,{todos:[...(x.todos||[]),{n:n2,d:false}]})}
+else if(a=="td")upd(k,{todos:(x.todos||[]).map((t,i)=>i==n?{n:t.n,d:!t.d}:t)});
+else if(a=="deltd")upd(k,{todos:(x.todos||[]).filter((_,i)=>i!=n)});
+else if(a=="mv"){const m=Object.assign({},x.m);m[n]=!m[n];upd(k,{m})}
+else if(a=="hab"){const h=Object.assign({},x.h);h[n]=!h[n];upd(k,{h})}
+else if(a=="water")upd(k,{water:(x.water||0)==n?n-1:n});
+else if(a=="pg")upd(k,{pages:Math.max(0,(x.pages||0)+n)});
+render()});
+document.addEventListener("input",e=>{const t=e.target,k=keyOf(addD(mon,sel));
+if(t.dataset.f){const v=t.dataset.f=="steps"?(t.value===""?"":+t.value):t.value;upd(k,{[t.dataset.f]:v})}
+else if(t.dataset.s){save("settings",Object.assign({},S(),{[t.dataset.s]:+t.value||0}))}});
+document.addEventListener("keydown",e=>{if(e.key=="Enter"&&(e.target.id=="tn"||e.target.id=="mn"))document.querySelector(e.target.id=="tn"?'[data-a=addt]':'[data-a=addm]').click()});
+document.addEventListener("change",e=>{if(e.target.dataset.s||e.target.dataset.f=="steps")render()});
+render();
+</script>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});</script>
+</body>
+</html>
